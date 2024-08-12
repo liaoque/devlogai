@@ -1,7 +1,11 @@
+import datetime
 import subprocess
 
 
 def get_git_log(user, start_date, end_date, repo_path='.'):
+    # if datetime.datetime.strptime(end_date, "%Y-%m-%d") >= datetime.datetime.today():
+    #     end_date = ""
+
     """
     获取指定用户在指定时间范围内的 git 提交日志。
 
@@ -14,8 +18,8 @@ def get_git_log(user, start_date, end_date, repo_path='.'):
     command = [
         'git', 'log',
         '--author={}'.format(user),
-        '--since={}'.format(start_date),
-        '--until={}'.format(end_date),
+        '--since="{} 00:00:00"'.format(start_date),
+        '--until="{} 23:59:59"'.format(end_date),
         '--pretty=format:%h %an %ad %s',
         '--date=short'
     ]
